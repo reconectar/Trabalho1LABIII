@@ -1,11 +1,11 @@
 package util;
 
 import object.Aluno;
-import util.AlunoComparator;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FileManager {
 
@@ -51,12 +51,11 @@ public class FileManager {
         return new Aluno(matricula, nome, nota);
     }
 
-    public static ArrayList<Aluno> orderByMatricula(String inputBinaryFilePath, String outputBinaryFilePath) throws FileNotFoundException {
+    public static ArrayList<Aluno> orderByMatricula(String inputBinaryFilePath) throws IOException {
         ArrayList<Aluno> alunosOrdenados = new ArrayList<>();
         RandomAccessFile raf = new RandomAccessFile(inputBinaryFilePath, "r");
-        RandomAccessFile outputFile = new RandomAccessFile(outputBinaryFilePath, "rw");
         try{
-            // Le o arquivo e adiona todos os Alunos a memoria
+            // Le o arquivo e adiona todos os Alunos a memoria (dentro de um array list)
             while(true){
                 int matricula = raf.readInt();
                 char stringChars[] = new char[Aluno.getMAX_NAME_SIZE()];
@@ -68,13 +67,29 @@ public class FileManager {
                 alunosOrdenados.add(new Aluno(matricula, nome, nota));
             }
         } catch(EOFException e){
-            e.printStackTrace(); //TODO remove when its working
         } catch (IOException e) {
-            e.printStackTrace(); //TODO remove when its working
         }
         Collections.sort(alunosOrdenados ,new AlunoComparator());
-        alunosOrdenados.toString();
+
+        raf.close();
         return alunosOrdenados;
+    }
+
+    public static void addIndexAndWrite(String inputBinaryFilePath, String outputBinaryFilePath) throws IOException {
+        RandomAccessFile outputFile = new RandomAccessFile(outputBinaryFilePath, "rw");
+        ArrayList<Aluno> alunosOrdenados = orderByMatricula(inputBinaryFilePath);
+        AtomicInteger i = new AtomicInteger(0);
+        alunosOrdenados.stream().forEach(aluno -> { //Reescrevemos o conteudo do Arraylist ordenado adicionando um indice a cada entrada
+            try {
+                outputFile.writeInt(i.get());
+                i.getAndIncrement();
+                outputFile.writeInt(aluno.getMatricula());
+                outputFile.writeChars(aluno.getNome());
+                outputFile.writeFloat(aluno.getNota());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 //    public static HashMap<> pagination(String inputBinaryFilePath) throws FileNotFoundException {

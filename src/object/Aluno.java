@@ -6,9 +6,6 @@ import java.io.RandomAccessFile;
 public class Aluno {
 
     private static final int MAX_NAME_SIZE = 30; // Usado depois para forçar o tamanho da string quando for convertido para bytes
-    //FIXME remove ids if needed
-//    private static int cont = 0;
-//    private int id;
     private int matricula;
     private String nome;
     private float nota;
@@ -16,8 +13,6 @@ public class Aluno {
     public Aluno() {}
 
     public Aluno(int matricula, String nome, float nota) {
-//        this.id = cont;
-//        cont++;
         this.matricula = matricula;
         this.nome = nome;
         this.setNota(nota); // Setter usado devido a regra de negocio necessaria para nota (!<0 and !>100)
@@ -66,11 +61,9 @@ public class Aluno {
     @Override
     public String toString(){
         return
-                //FIXME remove ids if needed
-//                "Id: " + this.id +
-                                System.lineSeparator() + "Nome: " + this.nome +
-                                System.lineSeparator() + "Matricula: " + this.matricula +
-                                System.lineSeparator() + "Nota: " + this.nota;
+                System.lineSeparator() + "Nome: " + this.nome +
+                System.lineSeparator() + "Matricula: " + this.matricula +
+                System.lineSeparator() + "Nota: " + this.nota;
     }
 
 }
