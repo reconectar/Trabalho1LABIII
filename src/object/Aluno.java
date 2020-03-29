@@ -5,7 +5,6 @@ import java.io.RandomAccessFile;
 
 public class Aluno {
 
-    //TODO move MAX_NAME_SIZE to inside the constructor if not needed outside
     private static final int MAX_NAME_SIZE = 30; // Usado depois para forçar o tamanho da string quando for convertido para bytes
     //FIXME remove ids if needed
 //    private static int cont = 0;
@@ -16,7 +15,7 @@ public class Aluno {
 
     public Aluno() {}
 
-    public Aluno(String nome, int matricula, float nota) {
+    public Aluno(int matricula, String nome, float nota) {
 //        this.id = cont;
 //        cont++;
         this.matricula = matricula;
@@ -25,7 +24,6 @@ public class Aluno {
     }
 
     public void writeToBinary(RandomAccessFile outputFile) throws IOException {
-        String test;
         StringBuilder nomeFinal = new StringBuilder(this.nome);
         nomeFinal.setLength(MAX_NAME_SIZE); //Setamos um tamanho estatico para facilitar navegação do arquivo depois
         outputFile.writeInt(matricula);
@@ -70,7 +68,9 @@ public class Aluno {
         return
                 //FIXME remove ids if needed
 //                "Id: " + this.id +
-                        "; Nome: " + this.nome + "; Matricula: " + this.matricula + "; Nota: " + this.nota;
+                                System.lineSeparator() + "Nome: " + this.nome +
+                                System.lineSeparator() + "Matricula: " + this.matricula +
+                                System.lineSeparator() + "Nota: " + this.nota;
     }
 
 }

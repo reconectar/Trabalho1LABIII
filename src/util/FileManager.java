@@ -19,7 +19,7 @@ public class FileManager {
             int matricula = Integer.parseInt(data[0]);
             String nome = data[1];
             float nota = Float.parseFloat(data[2].replace(",","."));
-            Aluno aluno = new Aluno(nome, matricula, nota); // O objeto aluno é instanciado a partir do formato da linha (matricula;nome;nota)
+            Aluno aluno = new Aluno(matricula, nome, nota); // O objeto aluno é instanciado a partir do formato da linha (matricula;nome;nota)
             aluno.writeToBinary(outputFile);
         }
     }
@@ -27,25 +27,21 @@ public class FileManager {
     // Le cada aluno dentro do arquivo binario pelo seu tamanho em bytes e retorna ao chegar ao indice passado
     public static Aluno binaryToAlunoByIndice(int indice, String inputBinaryFilePath) throws IOException {
         RandomAccessFile raf = new RandomAccessFile(inputBinaryFilePath, "r");
-
         raf.seek(0); // Coloca o cursor do arquivo em seu inicio
 
-        // Variaveis usadas para instanciar um Aluno quando o indice for encontrado
-        int matricula = 0;
-        String nome = null;
-        float nota = 0;
+                                //Tamanho do objeto aluno em bytes (int size + float size + string size * 2)
+        final int ALUNO_SIZE = (4 + 4 + (Aluno.getMAX_NAME_SIZE() * 2)); //Cara caractere ocupa 2 bytes, por isso foi multiplicado a string por 2
+        raf.seek(ALUNO_SIZE * indice); //Aqui o cursor é movido para a posicao desejada
 
-        // Nota-se que a cada leitura abaixo o cursor se move para o final do dado lido, foi usada essa logica para percorrer por cada Aluno
-        for(int i=0; i<indice; i++){
-            //TODO mudar para raf.skipBytes
-            matricula = raf.readInt();
-//            byte[] stringSize = new byte[Aluno.getMAX_NAME_SIZE()*2]; //Cada char possui 2 bytes, entao multiplicamos o tamanho da string por 2
-            // FIXME instanciar nome com o numero de bytes correto da string
-//            nome = raf.readUTF();
-            nota = raf.readFloat();
+        int matricula = raf.readInt();
+        char stringChars[] = new char[Aluno.getMAX_NAME_SIZE()];
+        for(int i=0; i<stringChars.length; i++){ //O tamanho da string nao esta na biblioteca do RandomAcessFile, lemos char por char e criamos a string
+            stringChars[i] = raf.readChar();
         }
-        return new Aluno(nome, matricula, nota);
-//        return new Aluno(); // Just for testing
+        String nome = new String(stringChars);
+        float nota = raf.readFloat();
+
+        return new Aluno(matricula, nome, nota);
     }
 
 }
