@@ -10,6 +10,8 @@ public class Main {
     // TODO alterar dadosTeste para dadosCompleto quando terminar e testar
     public static String textFilePath = "LabComp3_Exerc1_dadosTeste.txt";
     public static String binaryFilePath = "BinaryOutputFile.txt";
+    public static String orderedBinaryFilePath = "orderedBinaryOutputFile.txt";
+    public static Scanner userInput = new Scanner(System.in);
 
     public static void menu() throws IOException {
         System.out.println("--------------------------------");
@@ -26,7 +28,7 @@ public class Main {
                 searchByPos();
                 break;
             case 2:
-                System.out.println("work in progress");
+                searchByIndex();
                 break;
             case 3:
                 System.out.println("work in progress");
@@ -36,11 +38,20 @@ public class Main {
 
     public static void searchByPos() throws IOException {
         System.out.println("--------------------------------");
-        Scanner userInput = new Scanner(System.in);
         System.out.print("Digite a pos do aluno que deseja encontrar: ");
         int pos = userInput.nextInt();
         System.out.println(
-                FileManager.binaryToAlunoByPos(pos, binaryFilePath) //Imprime um objeto Aluno instanciado do arquivo binario pego pela pos
+                FileManager.binaryToAlunoByPos(pos, orderedBinaryFilePath) //Imprime um objeto Aluno instanciado do arquivo binario pego pela pos
+        );
+    }
+
+    public static void searchByIndex() throws IOException {
+        System.out.println("work in progress");
+        System.out.println("--------------------------------");
+        System.out.print("Digite o indice do aluno que deseja encontrar: ");
+        int indice = userInput.nextInt();
+        System.out.println(
+                FileManager.orderByMatricula(indice, binaryFilePath)
         );
     }
 
