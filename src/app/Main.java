@@ -18,7 +18,7 @@ public class Main {
     public static void menu() throws IOException {
         System.out.println("--------------------------------");
         System.out.println("1. Procurar por posicao");
-        System.out.println("2. Procurar por indice");
+        System.out.println("2. Procurar por matricula");
         System.out.println("3. Paginacao em ordem de matricula");
         System.out.println("4. Sair");
         System.out.println("--------------------------------");
@@ -30,7 +30,7 @@ public class Main {
                 searchByPos();
                 break;
             case 2:
-                searchByIndex();
+                searchByMatricula();
                 break;
             case 3:
                 pagination();
@@ -47,11 +47,14 @@ public class Main {
         );
     }
 
-    public static void searchByIndex() throws IOException {
+    public static void searchByMatricula() throws IOException {
         System.out.println("--------------------------------");
-        System.out.print("Digite o indice do aluno que deseja encontrar: ");
-        int indice = userInput.nextInt();
-        System.out.println(indice + "work in progress");
+        System.out.print("Digite a matricula do aluno que deseja encontrar: ");
+        int matricula = userInput.nextInt();
+        System.out.println("Procurando matricula no arquivo...");
+        System.out.println(
+            FileManager.searchByMatricula(matricula, orderedBinaryFilePath)
+        );
     }
 
     public static void pagination() throws IOException {

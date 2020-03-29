@@ -92,11 +92,48 @@ public class FileManager {
         });
     }
 
-//    public static HashMap<> pagination(String inputBinaryFilePath) throws FileNotFoundException {
-//        HashMap<> dicionarioAlfabeticoDeAlunos = new HashMap<Integer, Aluno>();
-//        RandomAccessFile raf = new RandomAccessFile(inputBinaryFilePath, "r");
-//        raf.seek(0);
-//        return dicionarioAlfabeticoDeAlunos;
-//    }
+    public static Aluno searchByIndex(int indice, String inputBinaryFilePath) throws IOException {
+        RandomAccessFile raf = new RandomAccessFile(inputBinaryFilePath, "r");
+
+        raf.seek(0); // Coloca o cursor do arquivo em seu inicio
+        // Nota-se que a cada leitura abaixo o cursos se move para o final do dado lido, foi usada essa logica para percorrer por cada Aluno
+        int matricula = -1;
+        float nota = -1;
+        char stringChars[] = new char[Aluno.getMAX_NAME_SIZE()];
+        String nome = null;
+        int auxIndice = -1;
+        while(auxIndice != indice) {
+            auxIndice = raf.readInt();
+            matricula = raf.readInt();
+            for (int i = 0; i < stringChars.length; i++) { //O tamanho da string nao esta na biblioteca do RandomAcessFile, lemos char por char e criamos a string
+                stringChars[i] = raf.readChar();
+            }
+            nome = new String(stringChars);
+            nota = raf.readFloat();
+        }
+        return new Aluno(matricula, nome, nota);
+    }
+
+    public static Aluno searchByMatricula(int matricula, String inputBinaryFilePath) throws IOException {
+        RandomAccessFile raf = new RandomAccessFile(inputBinaryFilePath, "r");
+
+        raf.seek(0); // Coloca o cursor do arquivo em seu inicio
+        // Nota-se que a cada leitura abaixo o cursos se move para o final do dado lido, foi usada essa logica para percorrer por cada Aluno
+        int indice = -1;
+        float nota = -1;
+        char stringChars[] = new char[Aluno.getMAX_NAME_SIZE()];
+        String nome = null;
+        int auxMatricula = -1;
+        while(auxMatricula != matricula) {
+            indice = raf.readInt();
+            auxMatricula = raf.readInt();
+            for (int i = 0; i < stringChars.length; i++) { //O tamanho da string nao esta na biblioteca do RandomAcessFile, lemos char por char e criamos a string
+                stringChars[i] = raf.readChar();
+            }
+            nome = new String(stringChars);
+            nota = raf.readFloat();
+        }
+        return new Aluno(auxMatricula, nome, nota);
+    }
 
 }
