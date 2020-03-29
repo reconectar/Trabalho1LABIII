@@ -24,7 +24,7 @@ public class FileManager {
         }
     }
 
-    // Le cada aluno dentro do arquivo binario pelo seu tamanho em bytes e retorna ao chegar a pos passado
+    // Le cada aluno dentro do arquivo binario pelo seu tamanho em bytes e retorna um objeto Aluno ao chegar a posicao passada
     public static Aluno binaryToAlunoByPos(int pos, String inputBinaryFilePath) throws IOException {
         RandomAccessFile raf = new RandomAccessFile(inputBinaryFilePath, "r");
         raf.seek(0); // Coloca o cursor do arquivo em seu inicio
@@ -43,5 +43,7 @@ public class FileManager {
 
         return new Aluno(matricula, nome, nota);
     }
+
+
 
 }

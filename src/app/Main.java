@@ -15,7 +15,8 @@ public class Main {
         System.out.println("--------------------------------");
         System.out.println("1. Procurar por posicao");
         System.out.println("2. Procurar por indice");
-        System.out.println("3. Sair");
+        System.out.println("3. Paginacao em ordem alfabetica");
+        System.out.println("4. Sair");
         System.out.println("--------------------------------");
         System.out.print("Digite a opcao desejada: ");
         Scanner userInput = new Scanner(System.in);
@@ -25,6 +26,9 @@ public class Main {
                 searchByPos();
                 break;
             case 2:
+                System.out.println("work in progress");
+                break;
+            case 3:
                 System.out.println("work in progress");
                 break;
         }
