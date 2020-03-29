@@ -24,14 +24,14 @@ public class FileManager {
         }
     }
 
-    // Le cada aluno dentro do arquivo binario pelo seu tamanho em bytes e retorna ao chegar ao indice passado
-    public static Aluno binaryToAlunoByIndice(int indice, String inputBinaryFilePath) throws IOException {
+    // Le cada aluno dentro do arquivo binario pelo seu tamanho em bytes e retorna ao chegar a pos passado
+    public static Aluno binaryToAlunoByPos(int pos, String inputBinaryFilePath) throws IOException {
         RandomAccessFile raf = new RandomAccessFile(inputBinaryFilePath, "r");
         raf.seek(0); // Coloca o cursor do arquivo em seu inicio
 
                                 //Tamanho do objeto aluno em bytes (int size + float size + string size * 2)
         final int ALUNO_SIZE = (4 + 4 + (Aluno.getMAX_NAME_SIZE() * 2)); //Cara caractere ocupa 2 bytes, por isso foi multiplicado a string por 2
-        raf.seek(ALUNO_SIZE * indice); //Aqui o cursor é movido para a posicao desejada
+        raf.seek(ALUNO_SIZE * pos); //Aqui o cursor é movido para a posicao desejada
 
         int matricula = raf.readInt();
         char stringChars[] = new char[Aluno.getMAX_NAME_SIZE()];
