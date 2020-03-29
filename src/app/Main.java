@@ -3,6 +3,7 @@ package app;
 import object.Aluno;
 import util.FileManager;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -42,9 +43,13 @@ public class Main {
         System.out.println("--------------------------------");
         System.out.print("Digite a pos do aluno que deseja encontrar: ");
         int pos = userInput.nextInt();
-        System.out.println(
-                FileManager.binaryToAlunoByPos(pos, orderedBinaryFilePath) //Imprime um objeto Aluno instanciado do arquivo binario pego pela pos
-        );
+        try{
+            System.out.println(
+                    FileManager.binaryToAlunoByPos(pos, orderedBinaryFilePath) //Imprime um objeto Aluno instanciado do arquivo binario pego pela pos
+            );
+        }catch (EOFException e){
+            System.out.println("Fora do arquivo!");
+        }
     }
 
     public static void searchByMatricula() throws IOException {
