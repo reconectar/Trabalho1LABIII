@@ -43,7 +43,7 @@ public class Main {
         System.out.print("Digite a pos do aluno que deseja encontrar: ");
         int pos = userInput.nextInt();
         System.out.println(
-                FileManager.binaryToAlunoByPos(pos, binaryFilePath) //Imprime um objeto Aluno instanciado do arquivo binario pego pela pos
+                FileManager.binaryToAlunoByPos(pos, orderedBinaryFilePath) //Imprime um objeto Aluno instanciado do arquivo binario pego pela pos
         );
     }
 

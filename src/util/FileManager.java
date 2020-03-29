@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class FileManager {
 
     //Tamanho do objeto aluno em bytes (int size + float size + string size * 2)
-    public static final int ALUNO_SIZE = (4 + 4 + (Aluno.getMAX_NAME_SIZE() * 2)); //Cara caractere ocupa 2 bytes, por isso foi multiplicado a string por 2
+    public static final int ALUNO_SIZE = (4 + 4 + 4 + (Aluno.getMAX_NAME_SIZE() * 2)); //Cara caractere ocupa 2 bytes, por isso foi multiplicado a string por 2
 
     // Converte um arquivo com objetos aluno em formato texto para arquivo binario
     public static void txtToBinary (String inputTextFilePath, String outputTextFilePath) throws IOException {
@@ -39,6 +39,7 @@ public class FileManager {
         raf.seek(0); // Coloca o cursor do arquivo em seu inicio
 
         raf.seek(ALUNO_SIZE * pos); //Aqui o cursor é movido para a posicao desejada
+        int indice = raf.readInt();
         int matricula = raf.readInt();
         char stringChars[] = new char[Aluno.getMAX_NAME_SIZE()];
         for(int i=0; i<stringChars.length; i++){ //O tamanho da string nao esta na biblioteca do RandomAcessFile, lemos char por char e criamos a string
